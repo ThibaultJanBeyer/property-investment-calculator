@@ -10,6 +10,7 @@ Link: https://thibaultjanbeyer.github.io/property-investment-calculator/
 
 - Translations (locale EN/DE)
 - Shareable link with query params
+- Add newsletter sign-up?
 
 - More Information
 - - Property laws i.e. "Mietpreisbremse" and what to look out for
