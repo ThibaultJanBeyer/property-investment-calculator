@@ -1,8 +1,9 @@
 import React from 'react'
-import { TextField, InputAdornment, Checkbox } from '@mui/material'
+import { TextField, InputAdornment, Checkbox, Tooltip } from '@mui/material'
 import { Lock, LockOpenOutlined } from '@mui/icons-material'
-import NumberFormat from 'react-number-format'
 
+import { NumberFormatField } from './NumberFormatField'
+import { ReadOnlyTextField } from './ReadOnlyTextField'
 import {
   CalcStateKeys,
   calcUpdateVal,
@@ -10,76 +11,61 @@ import {
   useCalculatorStore,
 } from '../../store/CalculatorStore'
 
-interface CustomProps {
-  onChange: (event: { target: { name: string; value: string } }) => void
-  name: string
-}
-
-const NumberFormatCustom = React.forwardRef<NumberFormat<any>, CustomProps>(
-  (props, ref) => {
-    const { onChange, ...other } = props
-
-    return (
-      <NumberFormat
-        {...other}
-        getInputRef={ref}
-        onValueChange={(values, { source }) => {
-          // bail if it was changed via side-effect and not vie human interaction
-          if (source !== 'event') return
-          onChange({
-            target: {
-              name: props.name,
-              value: values.value,
-            },
-          })
-        }}
-        thousandSeparator="."
-        decimalSeparator=","
-        isNumericString
-      />
-    )
-  }
-)
-
 export const Input: React.FunctionComponent<{
-  type?: 'currency' | 'percent'
+  type?: 'currency' | 'percent' | 'number'
   label: string
   stateKey: CalcStateKeys
   disabled?: boolean
-}> = ({ type = 'currency', label, stateKey, disabled }) => {
+  readOnly?: boolean
+}> = ({ type = 'currency', label, stateKey, disabled, readOnly }) => {
   const [state, dispatch] = useCalculatorStore()
 
   const storeItem = state.main[stateKey]
 
-  const typeIcon = type === 'percent' ? '%' : '€'
-  const friendlyVal = (
-    type === 'percent' ? storeItem.val * 100 : storeItem.val
-  ).toFixed(2)
+  let typeIcon
+  let friendlyVal = `${storeItem.val}`
+  if (type === 'percent') {
+    typeIcon = '%'
+    friendlyVal = (storeItem.val * 100).toFixed(0)
+  }
+  if (type === 'currency') {
+    typeIcon = '€'
+    friendlyVal = storeItem.val.toFixed(2)
+  }
+
+  const Field = readOnly ? ReadOnlyTextField : TextField
 
   return (
-    <TextField
+    <Field
+      style={{ width: '100%' }}
       label={label}
       InputProps={{
         endAdornment: (
           <>
-            <InputAdornment position="end">{typeIcon}</InputAdornment>{' '}
+            {typeIcon ? (
+              <InputAdornment position="end">{typeIcon}</InputAdornment>
+            ) : (
+              ''
+            )}
             {'locked' in storeItem ? (
-              <Checkbox
-                icon={<LockOpenOutlined />}
-                checkedIcon={<Lock />}
-                checked={disabled || storeItem.locked}
-                onClick={() =>
-                  dispatch(calcUpdateLock(stateKey, !storeItem.locked))
-                }
-                color="default"
-              />
+              <Tooltip title="Lock">
+                <Checkbox
+                  icon={<LockOpenOutlined />}
+                  checkedIcon={<Lock />}
+                  checked={disabled || storeItem.locked}
+                  onClick={() =>
+                    dispatch(calcUpdateLock(stateKey, !storeItem.locked))
+                  }
+                  color="default"
+                />
+              </Tooltip>
             ) : (
               ''
             )}
           </>
         ),
-        readOnly: storeItem.locked,
-        inputComponent: NumberFormatCustom as any,
+        readOnly: readOnly || storeItem.locked,
+        inputComponent: NumberFormatField as any,
       }}
       variant="standard"
       disabled={disabled}

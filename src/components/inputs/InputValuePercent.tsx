@@ -5,10 +5,11 @@ import {
   calcUpdateVal,
   useCalculatorStore,
 } from '../../store/CalculatorStore'
+import { Duoline } from '../ui/Duoline'
 
 import { Input } from './Input'
 
-export const InputPercentValueWrapper: React.FunctionComponent<{
+export const InputValuePercentWrapper: React.FunctionComponent<{
   friendlyName: string
   field: CalcStateKeys
   otherField: CalcStateKeys
@@ -39,25 +40,25 @@ export const InputPercentValueWrapper: React.FunctionComponent<{
   return <Input label={friendlyName} stateKey={field} type={type} />
 }
 
-export const InputPercentValue: React.FunctionComponent<{
+export const InputValuePercent: React.FunctionComponent<{
   stateKey: CalcStateKeys
   from: CalcStateKeys
   label: string
 }> = ({ stateKey, from, label }) => (
-  <>
-    <InputPercentValueWrapper
+  <Duoline>
+    <InputValuePercentWrapper
       field={stateKey}
       otherField={`${stateKey}_percent` as CalcStateKeys}
       totalField={from}
       friendlyName={label}
       type="currency"
     />
-    <InputPercentValueWrapper
+    <InputValuePercentWrapper
       field={`${stateKey}_percent` as CalcStateKeys}
       otherField={stateKey}
       totalField={from}
-      friendlyName={`${label} %`}
+      friendlyName=""
       type="percent"
     />
-  </>
+  </Duoline>
 )

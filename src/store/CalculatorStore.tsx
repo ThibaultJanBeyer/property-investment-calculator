@@ -8,8 +8,29 @@ export type CalcStateKeys =
   | 'cost_total'
   | 'budget'
   | 'budget_percent'
-  | 'maintenance_fees_m'
-  | 'maintenance_fees_y'
+  | 'yield'
+  | 'yield_percent'
+  | 'maintenance_repair'
+  | 'maintenance_repair_percent'
+  | 'maintenance_fees'
+  | 'maintenance_fees_year'
+  | 'maintenance_fees_fix'
+  | 'maintenance_fees_fix_percent'
+  | 'loan_total'
+  | 'loan_installment'
+  | 'loan_installment_year'
+  | 'loan_length'
+  | 'loan_outstanding'
+  | 'loan_cost'
+  | 'loan_cost_total'
+  | 'tax_rate'
+  | 'tax_deduction'
+  | 'tax_total'
+  | 'tax_total_year'
+  | 'rent_pretax'
+  | 'rent_pretax_year'
+  | 'rent_effective'
+  | 'rent_effective_year'
 
 export type CalcState = {
   main: {
@@ -21,9 +42,36 @@ export type CalcState = {
 }
 
 const baseCost = 300000
-const baseAddition = 0.12
+const baseAddition = 0.15
 const baseTotal = baseCost + baseCost * baseAddition
 const baseBudget = 0.2
+const baseMaintenance = 180
+const baseMaintenanceFixPercent = 0.2
+const baseMaintenanceFix = baseMaintenance * 12 * baseMaintenanceFixPercent
+const baseYieldPercent = 0.04
+const baseYield = baseTotal * baseBudget * baseYieldPercent
+const baseRepairPercent = 0.1
+const baseRepair = baseYield * baseRepairPercent
+const baseLoanTotal = baseTotal - baseTotal * baseBudget
+const baseLoanInstallment = 1075.75
+const baseLoanLength = 10
+const baseLoanOutstanding = 213136.98
+const baseLoanCosts =
+  baseLoanInstallment * 12 * baseLoanLength +
+  baseLoanOutstanding -
+  baseLoanTotal
+const baseTaxRate = 0.41
+export const baseTaxDeductionPercent = 0.02
+const baseTaxDeduction = baseTotal * baseTaxDeductionPercent
+const baseRentPretax =
+  baseYield +
+  baseLoanInstallment * 12 +
+  baseMaintenanceFix +
+  baseRepair +
+  baseLoanCosts / baseLoanLength
+const baseTaxTotal =
+  (baseRentPretax - baseTaxDeduction - baseLoanCosts / baseLoanLength) *
+  baseTaxRate
 
 export const initialState: CalcState = {
   main: {
@@ -49,11 +97,84 @@ export const initialState: CalcState = {
       val: baseBudget,
       locked: true,
     },
-    maintenance_fees_m: {
-      val: 180,
+    yield: {
+      val: baseYield,
+      locked: true,
     },
-    maintenance_fees_y: {
-      val: 180 * 12,
+    yield_percent: {
+      val: baseYieldPercent,
+      locked: false,
+    },
+    maintenance_repair: {
+      val: baseRepair,
+      locked: true,
+    },
+    maintenance_repair_percent: {
+      val: baseRepairPercent,
+      locked: false,
+    },
+    maintenance_fees: {
+      val: baseMaintenance,
+      locked: false,
+    },
+    maintenance_fees_year: {
+      val: baseMaintenance * 12,
+      locked: true,
+    },
+    maintenance_fees_fix: {
+      val: baseMaintenanceFix,
+      locked: true,
+    },
+    maintenance_fees_fix_percent: {
+      val: baseMaintenanceFixPercent,
+      locked: false,
+    },
+    loan_total: {
+      val: baseLoanTotal,
+    },
+    loan_installment: {
+      val: baseLoanInstallment,
+      locked: false,
+    },
+    loan_installment_year: {
+      val: baseLoanInstallment * 12,
+      locked: true,
+    },
+    loan_length: {
+      val: baseLoanLength,
+    },
+    loan_outstanding: {
+      val: baseLoanOutstanding,
+    },
+    loan_cost: {
+      val: baseLoanCosts / baseLoanLength,
+    },
+    loan_cost_total: {
+      val: baseLoanCosts,
+    },
+    tax_rate: {
+      val: baseTaxRate,
+    },
+    tax_deduction: {
+      val: baseTaxDeduction,
+    },
+    tax_total: {
+      val: baseTaxTotal / 12,
+    },
+    tax_total_year: {
+      val: baseTaxTotal,
+    },
+    rent_pretax: {
+      val: baseRentPretax / 12,
+    },
+    rent_pretax_year: {
+      val: baseRentPretax,
+    },
+    rent_effective: {
+      val: (baseRentPretax + baseTaxTotal) / 12,
+    },
+    rent_effective_year: {
+      val: baseRentPretax + baseTaxTotal,
     },
   },
 }
@@ -62,6 +183,7 @@ export const initialState: CalcState = {
 export enum ACTIONS {
   CALC_UPDATE_VAL = 'CALC_UPDATE_VAL',
   CALC_UPDATE_LOCK = 'CALC_UPDATE_LOCK',
+  CALC_SET_STATE = 'CALC_SET_STATE',
 }
 
 // Reducers
@@ -71,6 +193,10 @@ type Action =
       type: ACTIONS.CALC_UPDATE_LOCK
       key: CalcStateKeys
       val: boolean
+    }
+  | {
+      type: ACTIONS.CALC_SET_STATE
+      val: CalcState
     }
 type Reducer = (state: CalcState, action: Action) => CalcState
 
@@ -100,6 +226,8 @@ export const Reducer: Reducer = (state = initialState, action) => {
       },
     }
 
+  if (action.type === ACTIONS.CALC_SET_STATE) return action.val
+
   return state
 }
 
@@ -115,6 +243,12 @@ export const calcUpdateLock = (key: CalcStateKeys, val: boolean) =>
   ({
     type: ACTIONS.CALC_UPDATE_LOCK,
     key,
+    val,
+  } as Action)
+
+export const calcSetState = (val: CalcState) =>
+  ({
+    type: ACTIONS.CALC_SET_STATE,
     val,
   } as Action)
 
