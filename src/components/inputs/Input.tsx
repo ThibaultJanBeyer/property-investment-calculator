@@ -1,5 +1,12 @@
 import React from 'react'
-import { TextField, InputAdornment, Checkbox, Tooltip } from '@mui/material'
+import {
+  TextField,
+  Icon,
+  InputAdornment,
+  Checkbox,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import { Lock, LockOpenOutlined } from '@mui/icons-material'
 
 import { NumberFormatField } from './NumberFormatField'
@@ -48,10 +55,19 @@ export const Input: React.FunctionComponent<{
               ''
             )}
             {'locked' in storeItem ? (
-              <Tooltip title="Lock">
+              <Tooltip
+                title={
+                  <Typography
+                    component="p"
+                    style={{ color: 'rgb(246, 246, 246)' }}
+                  >
+                    Lock
+                  </Typography>
+                }
+              >
                 <Checkbox
-                  icon={<LockOpenOutlined />}
-                  checkedIcon={<Lock />}
+                  icon={<Icon fontSize="large" component={LockOpenOutlined} />}
+                  checkedIcon={<Icon fontSize="large" component={Lock} />}
                   checked={disabled || storeItem.locked}
                   onClick={() =>
                     dispatch(calcUpdateLock(stateKey, !storeItem.locked))

@@ -10,14 +10,17 @@ export const ReadOnlyTextField = styled(TextField)(({ theme }) => ({
   },
   '& .MuiInput-underline': {
     '&:before': {
-      borderBottom: `1px dashed ${theme.palette.text.disabled}`,
+      borderBottom: `1px solid rgba(0,0,0,0.1)`,
     },
     '&:after': {
       border: 0,
     },
     '&:hover': {
       '&:before': {
-        borderBottom: `1px dashed ${theme.palette.text.disabled}`,
+        borderBottom: `1px solid rgba(0,0,0,0.1)`,
+      },
+      '&:after': {
+        border: 0,
       },
     },
   },

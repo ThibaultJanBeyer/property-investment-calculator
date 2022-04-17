@@ -4,7 +4,7 @@ import { InputValuePercent } from '../inputs/InputValuePercent'
 import { Paper } from '../ui/Paper'
 
 export const Yield: React.FunctionComponent = () => (
-  <Paper title="Rendite" overlayStyle={{ background: 'rgba(0, 255, 0, .2)' }}>
+  <Paper title="Rendite" highlight>
     <InputValuePercent
       label="Renditewunsch /Jahr"
       stateKey="yield"

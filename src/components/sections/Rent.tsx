@@ -8,10 +8,7 @@ import { useCalculatorStore } from '../../store/CalculatorStore'
 export const Rent: React.FunctionComponent = () => {
   const [state] = useCalculatorStore()
   return (
-    <Paper
-      title="Notwendige Mieteinnahmen"
-      overlayStyle={{ background: 'rgba(0, 0, 255, .1)' }}
-    >
+    <Paper title="Benötigte Mieteinnahmen" highlight>
       <InputTotalMonthYear
         label="Kaltmiete"
         stateKey="rent_pretax_year"
