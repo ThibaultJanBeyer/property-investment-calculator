@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start:dev": "yarn start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && rm -rf docs && mv build docs",
     "test": "react-scripts test",
     "lint": "eslint --ext .tsx,ts src/",
     "eject": "react-scripts eject"
