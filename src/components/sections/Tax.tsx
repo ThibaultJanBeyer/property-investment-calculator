@@ -13,7 +13,7 @@ import { InputTotalMonthYear } from '../inputs/InputTotalMonthYear'
 export const Tax: React.FunctionComponent = () => {
   const [state] = useCalculatorStore()
   return (
-    <Paper title="Steuerkosten">
+    <Paper title="Steuerbelastung">
       <Input label="Steuersatz" stateKey="tax_rate" type="percent" />
       <Spacer />
       <InputTotal

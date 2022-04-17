@@ -1,13 +1,15 @@
 import * as React from 'react'
-import { CssBaseline, darkScrollbar } from '@mui/material'
+import { CssBaseline, darkScrollbar, useMediaQuery } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import { Calculator } from './components/Calculator'
 
 export const App = () => {
+  const isMobile = useMediaQuery('(max-width:600px)')
   const theme = createTheme({
     typography: {
-      fontSize: 10,
+      fontSize: isMobile ? 7 : 10,
+      htmlFontSize: isMobile ? 7 : 10,
       allVariants: {
         color: '#37424A',
         fontSize: '2rem',
@@ -15,7 +17,7 @@ export const App = () => {
       fontFamily: '"Merriweather Sans", sans-serif',
       h1: {
         fontFamily: '"Yeseva One", serif',
-        fontSize: '7rem',
+        fontSize: '6rem',
         letterSpacing: '-0.03rem',
         marginTop: '1rem',
       },
@@ -48,9 +50,7 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div style={{}}>
-        <Calculator />
-      </div>
+      <Calculator />
     </ThemeProvider>
   )
 }
