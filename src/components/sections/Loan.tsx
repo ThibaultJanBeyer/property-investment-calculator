@@ -3,9 +3,9 @@ import React from 'react'
 import { Input } from '../inputs/Input'
 import { InputTotal } from '../inputs/InputTotal'
 import { InputMonthYear } from '../inputs/InputMonthYear'
-import { InputTotalMonthYear } from '../inputs/InputTotalMonthYear'
 import { Paper } from '../ui/Paper'
 import { Spacer } from '../ui/Spacer'
+import { Duoline } from '../ui/Duoline'
 import { useCalculatorStore } from '../../store/CalculatorStore'
 
 export const Loan: React.FunctionComponent = () => {
@@ -25,25 +25,42 @@ export const Loan: React.FunctionComponent = () => {
       <Spacer />
       <Input label="Restschuld" stateKey="loan_outstanding" />
       <Spacer />
-      <InputTotalMonthYear
-        label="Kreditkosten"
-        stateKey="loan_cost_total"
-        yearSuffix="_total"
-        stateKeys={[
-          'loan_installment',
-          'loan_length',
-          'loan_outstanding',
-          'loan_total',
-        ]}
-        newVal={
-          state.main.loan_installment_year.val * state.main.loan_length.val +
-          state.main.loan_outstanding.val -
-          state.main.loan_total.val
-        }
-        dividedBy={state.main.loan_length.val}
-        monthLabel="Jahr"
-        yearLabel="Gesamt"
-      />
+      <Duoline isEven>
+        <div style={{ marginRight: '15px' }}>
+          <InputTotal
+            label="Kreditkosten /Jahr"
+            stateKey="loan_cost"
+            stateKeys={[
+              'loan_installment_year',
+              'loan_length',
+              'loan_outstanding',
+              'loan_total',
+            ]}
+            newVal={
+              (state.main.loan_installment_year.val *
+                state.main.loan_length.val +
+                state.main.loan_outstanding.val -
+                state.main.loan_total.val) /
+              state.main.loan_length.val
+            }
+          />
+        </div>
+        <InputTotal
+          label="/Gesamt"
+          stateKey="loan_cost_total"
+          stateKeys={[
+            'loan_installment_year',
+            'loan_length',
+            'loan_outstanding',
+            'loan_total',
+          ]}
+          newVal={
+            state.main.loan_installment_year.val * state.main.loan_length.val +
+            state.main.loan_outstanding.val -
+            state.main.loan_total.val
+          }
+        />
+      </Duoline>
     </Paper>
   )
 }
