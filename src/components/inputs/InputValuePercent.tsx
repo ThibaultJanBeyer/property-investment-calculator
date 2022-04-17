@@ -29,7 +29,7 @@ export const InputValuePercentWrapper: React.FunctionComponent<{
 
   // this is a side-effect from a change in the total value, it only works on the unlocked prop
   useEffect(() => {
-    if (locked) dispatch(calcUpdateVal(field, val))
+    if (!locked) dispatch(calcUpdateVal(field, val))
   }, [totalVal])
 
   // this is a side-effect from the corresponding value, it only affects the corresponding locked prop (the one not being actively manipulated)
