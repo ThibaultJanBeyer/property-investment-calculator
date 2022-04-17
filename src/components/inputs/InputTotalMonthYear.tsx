@@ -41,7 +41,7 @@ export const InputTotalMonthYear: React.FunctionComponent<{
         stateKey={baseStateKey as CalcStateKeys}
         newVal={isBaseMonth ? newVal : newVal / dividedBy}
         stateKeys={stateKeys}
-        label={`${label} /${monthLabel}`}
+        label={`/${monthLabel}`}
       />
     </Duoline>
   )

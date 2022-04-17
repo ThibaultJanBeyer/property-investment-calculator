@@ -48,7 +48,7 @@ export const Calculator: React.FunctionComponent = () => {
           {(state.main.yield_percent.val * 100).toFixed(0)}%
         </strong>{' '}
         zu erzielen muss diese Immobilie für eine Kaltmiete von{' '}
-        <strong style={{ color: 'purple' }}>
+        <strong style={{ color: 'lightsalmon' }}>
           {state.main.rent_effective.val.toFixed(2)}€
         </strong>{' '}
         im Monat vermietet werden.

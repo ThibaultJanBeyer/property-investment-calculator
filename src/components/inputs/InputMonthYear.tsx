@@ -47,7 +47,7 @@ export const InputMonthYear: React.FunctionComponent<{
     <InputMonthYearWrapper
       field={stateKey}
       otherField={`${stateKey}_year` as CalcStateKeys}
-      friendlyName={`${label} /Monat`}
+      friendlyName={`/Monat`}
       type="month"
     />
   </Duoline>

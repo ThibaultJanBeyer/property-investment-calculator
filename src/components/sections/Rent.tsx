@@ -34,8 +34,8 @@ export const Rent: React.FunctionComponent = () => {
       <InputTotalMonthYear
         label="Kaltmiete Effektiv"
         stateKey="rent_effective_year"
-        stateKeys={['rent_pretax_year', 'tax_total']}
-        newVal={state.main.rent_pretax_year.val + state.main.tax_total.val}
+        stateKeys={['rent_pretax_year', 'tax_total_year']}
+        newVal={state.main.rent_pretax_year.val + state.main.tax_total_year.val}
       />
     </Paper>
   )
