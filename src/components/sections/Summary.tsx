@@ -20,7 +20,7 @@ export const Summary: React.FunctionComponent = () => {
         </Highlight>{' '}
         zu erzielen bei einem Kaufpreis von{' '}
         {currencyFormat.format(state.main.cost_total.val)} und einer
-        Kreditaufnahme von {currencyFormat.format(state.main.loan_total.val)}
+        Kreditaufnahme von {currencyFormat.format(state.main.loan_total.val)}{' '}
         muss diese Immobilie eine Kaltmiete von{' '}
         <Highlight>
           {currencyFormat.format(state.main.rent_effective.val)}

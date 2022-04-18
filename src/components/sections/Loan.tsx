@@ -30,7 +30,21 @@ export const Loan: React.FunctionComponent = () => {
 
   return (
     <Paper title="Kreditkosten">
-      {noLoan && 'Kein Kredit notwendig'}
+      {noLoan ? (
+        'Kein Kredit notwendig'
+      ) : (
+        <>
+          Nutze einen{' '}
+          <a
+            href="https://baufinanzierungsrechner.dkb.de/antrag/process/1/baufi-kondition-baufismart?wt_mc=pk.wef_kondi.lp.oben.immofinanzierung.konditionen"
+            target="_blank"
+          >
+            Finanzierungsrechner
+          </a>{' '}
+          um deine Kreditkonditionen zu kennen.
+          <Spacer />
+        </>
+      )}
       <div style={noLoan ? { display: 'none' } : {}}>
         <InputTotal
           label="Beleihungsbetrag"
