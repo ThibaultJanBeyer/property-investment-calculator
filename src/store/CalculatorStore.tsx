@@ -99,46 +99,46 @@ export const initialState: CalcState = {
     },
     yield: {
       val: baseYield,
-      locked: true,
+      locked: false,
     },
     yield_percent: {
       val: baseYieldPercent,
-      locked: false,
+      locked: true,
     },
     maintenance_repair: {
       val: baseRepair,
-      locked: true,
+      locked: false,
     },
     maintenance_repair_percent: {
       val: baseRepairPercent,
-      locked: false,
+      locked: true,
     },
     maintenance_fees: {
       val: baseMaintenance,
-      locked: false,
+      locked: true,
     },
     maintenance_fees_year: {
       val: baseMaintenance * 12,
-      locked: true,
+      locked: false,
     },
     maintenance_fees_fix: {
       val: baseMaintenanceFix,
-      locked: true,
+      locked: false,
     },
     maintenance_fees_fix_percent: {
       val: baseMaintenanceFixPercent,
-      locked: false,
+      locked: true,
     },
     loan_total: {
       val: baseLoanTotal,
     },
     loan_installment: {
       val: baseLoanInstallment,
-      locked: false,
+      locked: true,
     },
     loan_installment_year: {
       val: baseLoanInstallment * 12,
-      locked: true,
+      locked: false,
     },
     loan_length: {
       val: baseLoanLength,
@@ -184,6 +184,7 @@ export enum ACTIONS {
   CALC_UPDATE_VAL = 'CALC_UPDATE_VAL',
   CALC_UPDATE_LOCK = 'CALC_UPDATE_LOCK',
   CALC_SET_STATE = 'CALC_SET_STATE',
+  CALC_NULL_LOAN = 'CALC_NULL_LOAN',
 }
 
 // Reducers
@@ -194,10 +195,8 @@ type Action =
       key: CalcStateKeys
       val: boolean
     }
-  | {
-      type: ACTIONS.CALC_SET_STATE
-      val: CalcState
-    }
+  | { type: ACTIONS.CALC_SET_STATE; val: CalcState }
+  | { type: ACTIONS.CALC_NULL_LOAN }
 type Reducer = (state: CalcState, action: Action) => CalcState
 
 export const Reducer: Reducer = (state = initialState, action) => {
@@ -228,6 +227,33 @@ export const Reducer: Reducer = (state = initialState, action) => {
 
   if (action.type === ACTIONS.CALC_SET_STATE) return action.val
 
+  if (action.type === ACTIONS.CALC_NULL_LOAN) {
+    const nullStateFields: CalcStateKeys[] = [
+      'loan_installment',
+      'loan_outstanding',
+    ]
+    return {
+      ...state,
+      main: {
+        ...state.main,
+        loan_length: {
+          ...state.main.loan_length,
+          val: 1,
+        },
+        ...nullStateFields.reduce(
+          (prev, value) => ({
+            ...prev,
+            [value]: {
+              ...state.main[value],
+              val: 0,
+            },
+          }),
+          {}
+        ),
+      },
+    }
+  }
+
   return state
 }
 
@@ -251,6 +277,8 @@ export const calcSetState = (val: CalcState) =>
     type: ACTIONS.CALC_SET_STATE,
     val,
   } as Action)
+
+export const calcNullLoan = () => ({ type: ACTIONS.CALC_NULL_LOAN } as Action)
 
 // Store
 export type CalcDispatch = Dispatch<Action>

@@ -11,7 +11,7 @@ export const Duoline: React.FC<
     style={{
       display: 'grid',
       gap: '5px',
-      gridTemplateColumns: `1fr ${isEven ? '1fr' : '100px'}`,
+      gridTemplateColumns: `1fr ${isEven ? '1fr' : '110px'}`,
       alignItems: 'flex-end',
       ...style,
     }}
