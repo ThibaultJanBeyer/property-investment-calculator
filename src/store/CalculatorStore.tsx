@@ -289,6 +289,7 @@ export const CalculatorStoreProvider: React.FunctionComponent<{
   children: any
 }> = ({ children }) => {
   const [globalState, dispatch] = React.useReducer(Reducer, initialState)
+  // store state in query params … console.log('REDUCER', globalState)?
   return (
     <Store.Provider value={[globalState, dispatch]}>{children}</Store.Provider>
   )

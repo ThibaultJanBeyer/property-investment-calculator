@@ -3,7 +3,7 @@ import React from 'react'
 export const Highlight: React.FC<React.PropsWithChildren<any>> = ({
   children,
 }) => (
-  <div
+  <span
     style={{
       display: 'inline-block',
       backgroundImage:
@@ -11,5 +11,5 @@ export const Highlight: React.FC<React.PropsWithChildren<any>> = ({
     }}
   >
     {children}
-  </div>
+  </span>
 )
