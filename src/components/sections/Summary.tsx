@@ -12,7 +12,7 @@ export const Summary: React.FunctionComponent = () => {
     currency: 'EUR',
   })
   return (
-    <Paper title="Zusammenfassung">
+    <Paper title="Fazit">
       <Typography component="p">
         Um eine effektive Netto-Rendite von{' '}
         <Highlight>
