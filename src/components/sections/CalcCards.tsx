@@ -44,7 +44,7 @@ export const CalcCards: React.FunctionComponent = () => {
       >
         <Purchase />
         <Loan />
-        <Maintenance />
+        <Rent />
       </div>
       <div
         style={{
@@ -53,10 +53,10 @@ export const CalcCards: React.FunctionComponent = () => {
           gridTemplateRows: 'repeat(4, max-content)',
         }}
       >
-        <Summary />
+        <Maintenance />
         <Yield />
-        <Rent />
         <Tax />
+        <Summary />
       </div>
     </div>
   )

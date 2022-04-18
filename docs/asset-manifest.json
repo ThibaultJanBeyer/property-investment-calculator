@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/property-investment-calculator/static/css/main.2e8cd4c6.css",
-    "main.js": "/property-investment-calculator/static/js/main.06fe3fd9.js",
+    "main.js": "/property-investment-calculator/static/js/main.4b5ccb8d.js",
     "static/js/787.30c33713.chunk.js": "/property-investment-calculator/static/js/787.30c33713.chunk.js",
     "index.html": "/property-investment-calculator/index.html",
     "main.2e8cd4c6.css.map": "/property-investment-calculator/static/css/main.2e8cd4c6.css.map",
-    "main.06fe3fd9.js.map": "/property-investment-calculator/static/js/main.06fe3fd9.js.map",
+    "main.4b5ccb8d.js.map": "/property-investment-calculator/static/js/main.4b5ccb8d.js.map",
     "787.30c33713.chunk.js.map": "/property-investment-calculator/static/js/787.30c33713.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2e8cd4c6.css",
-    "static/js/main.06fe3fd9.js"
+    "static/js/main.4b5ccb8d.js"
   ]
 }

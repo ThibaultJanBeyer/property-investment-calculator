@@ -24,7 +24,7 @@ export const Calculator: React.FunctionComponent = () => (
         Wieviel Miet&shy;einnahmen brauchst du um deine Rendite&shy;ziele zu
         erreichen? Mit diesem Rechner kannst du die nötige Miet&shy;höhe anhand
         deiner Kosten für dein Rendite&shy;ziel errechnen. Anschließend werden
-        dir, grund&shy;legende Tipps mit auf den Weg gebracht.
+        dir, grund&shy;legende Tipps mit auf den Weg gegeben.
       </Typography>
     </div>
     <Spacer size="huge" />
